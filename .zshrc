@@ -130,20 +130,11 @@ alias isup="pgrep -lf"
 alias g="git"
 alias gr="grep -irn"
 
-function git-pbo() {
-    pout=$(git push -u origin $(git rev-parse --abbrev-ref HEAD) 2>&1)
-    echo $pout
-    mr_link=$(echo $pout | grep -o -e "https\://github.deezerdev.com/[^\ ]*" -m 1)
-    echo $mr_link
-    if [ -n "$mr_link" ]; then
-        xdg-open "$mr_link"
-    fi
-}
-
 function rline() {
     # rline myfile 52
     sed "'${2}q;d'" $1
 }
+
 alias p="python"
 alias pipup="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
 alias ip="ipython"
