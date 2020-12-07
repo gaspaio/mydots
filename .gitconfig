@@ -1,0 +1,54 @@
+[user]
+    name = Gaspaio
+    email = ggaspaio@gmail.com
+
+[color]
+    ui = true
+
+[core]
+    editor = vim
+    ignorecase = false
+
+[alias]
+    st = status --short --branch
+    ci = commit
+    cm = commit -m
+    br = branch
+    a = add -A
+    co = checkout
+    df = diff
+    dc = diff --cached
+    dfn = diff --name-only
+    who = shortlog -s --
+    l = log --pretty=format:'%C(auto)%h %s [%an, %ad]%d' --graph
+    la = log --pretty=format:'%C(auto)%h %s [%an, %ad]%d' --graph --all
+    oops = commit --amend --no-edit
+    zut = reset --soft HEAD~1
+    pf = push --force-with-lease
+    fe = fetch
+
+    # Deezer workflow
+    # ####################
+    upm = "!f() { git fetch upstream && git merge upstream/master; }; f"
+
+    # Reset current branch to master
+    rem = "!f() { git reset $(git merge-base master $(git rev-parse --abbrev-ref HEAD)); }; f"
+
+[core]
+    excludesfile = ~/.gitignore_global
+
+[diff]
+    noprefix = true
+
+[fetch]
+    prune = true
+
+[push]
+    default = simple
+
+[status]
+    showUntrackedFiles = all
+
+# Overwrite stuff (like use name/mail) in a non versionned file
+[include]
+    path = .gitconfig_local

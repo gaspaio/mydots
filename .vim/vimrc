@@ -1,0 +1,231 @@
+set nocompatible              " Use vim defaults, require for Vundle
+filetype off                  " Required for Vundle
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Init Vundle plugins
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'romainl/flattened'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-scripts/DeleteTrailingWhitespace'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Raimondi/delimitMate'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'motus/pig.vim'
+" End init Vundle plugins
+
+call vundle#end()            " required
+filetype plugin indent on    " filetype specific indent definitions, required
+
+" General options
+" -----------------
+set fileformat=unix
+set encoding=utf-8
+set backspace=indent,eol,start      " allow backspacing over everything in insert mode
+set noerrorbells                    " no beeps, no flashs on error
+set novisualbell
+set autoread                        " warn if external changed to current file
+set showcmd                         " display info on current command
+set writeany                        " don't warn when writing a read-only file
+set nowrap                          " no wrapping
+set history=20                      " levels of command history
+set undolevels=30
+set scrolloff=5                     " Show 5 lines above/below the cursor when scrolling.
+set number                          " line numbering on
+set mouse=a                         " enable mouse in all modes if available
+
+if !has('nvim')
+    set ttymouse=xterm2             " enable mouse in tmux (vim only)
+endif
+
+set lazyredraw                      " redraw only when we need to.
+set noruler                         " hide cursor position
+set hidden                          " allow for hidden edited tabs
+set nowritebackup
+set splitbelow                      " Open new split panes to right and bottom,
+set splitright                      " which feels more natural than Vim’s default
+
+set ignorecase                      " Ignore case on search and word completion
+" set infercase                     " keep current word case when word completing
+set incsearch                       " incremental search
+" set nowrapscan                    " Disable file wrap during search
+set hlsearch                        " highlight matches
+
+set clipboard=unnamedplus           " copy to/paste from system clipboard (unix: user de + clipboard, not the * one)
+
+" Backup, Swap and Undo files
+" Handle them in a more practical way
+if !filewritable($HOME."/.vim/backup")   " Create dir if necessary
+    call mkdir($HOME."/.vim/backup", "p")
+endif
+set backupdir=$HOME/.vim/backup//        " Define backup dir
+set backup                               " Activate backups
+if !filewritable($HOME."/.vim/swap")
+    call mkdir($HOME."/.vim/swap", "p")
+endif
+set directory=$HOME/.vim/swap//
+if !filewritable($HOME."/.vim/undo")
+    call mkdir($HOME."/.vim/undo", "p")
+endif
+set undodir=$HOME/.vim/undo//
+
+
+" Command completion
+" ------------------
+set wildmode=longest:list,full
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=*py_cache*,*.pyc,.ipynb_checkpoints/**
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+
+" Colors
+" ------------------
+syntax enable                       " Syntax highlighting
+
+" https://github.com/romainl/flattened
+set background=dark
+colorscheme flattened_dark
+
+" Force color of unwanted chars accross colorschemes
+highlight SpecialKey ctermfg=234 ctermbg=239 cterm=NONE
+
+" Code related generics
+" -----------------
+set list                           " Display unwanted hidden chars
+set listchars=tab:>-,trail:~,extends:>,precedes:<
+set showmatch                       " Display matching braces
+set matchtime=2
+
+" Default indenting
+set expandtab                       " Use spaces for tabs
+set softtabstop=4                   " Indenting with tabs
+set tabstop=4                       " Display tabs as 4 cols
+" set autoindent                      " Copy indentation from previous line
+" set smartindent                   " Try to infer indentation from text
+
+" Folding
+set foldenable                      " enable folding
+set foldlevelstart=99               " Folds open when opening a buffer
+set foldnestmax=10                  " 10 nested fold max
+set foldmethod=indent               " fold based on indent level
+
+:let mapleader = ","                      " because \ is a pain in french Mac keyboards<Paste>
+
+" Plugin: Airline
+let g:airline_theme='solarized'
+let g:airline_solarized_dark_text=1
+let g:airline_left_sep = ''
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_sep = ''
+
+
+" Plugin: NERDTree
+let g:NERDTreeShowHidden=1
+let g:NERDTreeStatusline="NERD"
+let g:NERDTreeIgnore = ['\.sw.$', '^\.git$', '^\.DS_Store$']
+let g:NERDTreeIgnore += ['^__pycache__', '\.pyc$', '^\.ipynb_checkpoints']
+
+" If the option is set to 2 then it behaves the same as if set to 1 except
+" that the CWD is changed whenever the tree root is changed.
+" http://stackoverflow.com/questions/21888869/how-to-make-ctrlps-search-directory-change-according-to-nerdtrees-root#21891088
+let g:NERDTreeChDirMode = 2
+
+autocmd StdinReadPre * let s:std_in=1  " - Open NERDTree auto when no files were specified
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+map <Leader>t       :NERDTreeToggle<CR>
+map <Leader>tf      :NERDTreeFocus<CR>
+" Rend splitting uniform on Vim, NerdTree and CtrlP
+let NERDTreeMapOpenSplit = 's'
+let NERDTreeMapPreviewSplit = 'gs'
+let NERDTreeMapOpenVSplit = 'i'
+let NERDTreeMapPreviewVSplit = 'gi'
+
+" Plugin: DeleteTrailingWhitespace - auto whitespace delete on save
+let g:DeleteTrailingWhitespace=1
+let g:DeleteTrailingWhitespace_Action ='delete'
+
+
+" Plugin: CtrlP
+let g:ctrlp_map = '<Leader>f'           " Open CtrlP in File mode
+let g:ctrlp_regexp = 1
+let g:ctrlp_working_path_mode = 'rw'    " Use Vim CMD for root dir when searching
+" <ctrl-v/x> to open the selected entry in a new V/H split.
+"let g:ctrlp_prompt_mappings = {
+"    \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
+"    \ 'AcceptSelection("h")': ['<c-s>'],
+"    \ 'AcceptSelection("t")': ['<c-t>'],
+"    \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>']
+"\ }
+" <ctrl-f/b> to cycle between modes.
+
+nnoremap <Leader>b       :CtrlPBuffer<CR>
+nnoremap <Leader>m       :CtrlPMixed<CR>
+
+
+" Plugin: YCM
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_max_num_identifier_candidates = 5
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_confirm_extra_conf = 0
+
+nnoremap <leader>gt  :YcmCompleter GoTo<CR>
+nnoremap <leader>gr  :YcmCompleter GoToReferences<CR>
+nnoremap <leader>gd  :YcmCompleter GetDoc<CR>
+
+
+" Plugin: UltiSnips
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+
+" Plugin: DelimitMate
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+let delimitMate_expand_inside_quotes = 1
+let delimitMate_jump_expansion = 1
+let delimitMate_balance_matchpairs = 1
+
+
+" Filetype specifics
+" Deezer::Search project
+au BufRead,BufNewFile *.mapping set filetype=json
+
+au FileType python setl ts=4 sts=4 sw=4
+" let python_highlight_all = 1
+
+au FileType php setl ts=4 sts=4 sw=4
+
+au FileType yaml setlocal ts=2 sts=2 sw=2
+au FileType scala,sbt setlocal ts=2 sts=2 sw=2
+
+
+" GENERICS
+
+" Misc key mappings
+" turn off search highlight
+nnoremap <leader><space> :nohlsearch<CR>
+" space open/closes folds
+nnoremap <space> za
+
+" Pasting without autoindent
+" http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste
+nnoremap <Leader>p  :set invpaste paste?<CR>
+set pastetoggle='<Leader>p'
+

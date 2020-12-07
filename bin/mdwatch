@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Watch a md file for changes and build html5 using pandoc (+mathjax support)
+# cmd : mdwatch myfile
+# will watch myfile.md, and build myfile.html
+
+# Install Pandoc
+# Install fswatch
+# Install a browser plugin that refreshes html file on change.
+# Put this script on the bin path
+
+if [ -z "$1" ]; then
+    echo "You forgot the filename."
+    exit 1
+fi
+
+echo "Generating $1.html..."
+pandoc -s --mathjax -t html5 -o $1.html $1.md
+
+echo "Watching $1.md for changes..."
+fswatch -v -o $1.md | xargs -n1 -I{} pandoc -s --mathjax -t html5 -o $1.html $1.md

@@ -1,0 +1,10 @@
+*.sw*
+.vim/.netrwhist
+.vim/bundle
+.vim/backup
+.vim/swap
+.vim/undo
+base16-shell
+bash-git-prompt
+.tmux/
+*.pyc

@@ -1,0 +1,12 @@
+# when creating new environments add these packages by default
+create_default_packages:
+  - ipython
+  - jupyter
+  - numpy
+  - pandas
+  - matplotlib
+  - scipy
+
+channels:
+  - conda-forge
+  - defaults

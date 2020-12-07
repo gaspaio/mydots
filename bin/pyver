@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+# Check the versions of libraries
+
+print('')
+
+# Python version
+import sys
+print('Python:\t{}\n'.format(sys.version))
+
+libs = ['bs4', 'jupyter_core', 'matplotlib', 'numpy', 'pandas', 'scipy', 'seaborn', 'sklearn']
+
+for lb in libs:
+    ver = ()
+    try:
+        mod = __import__(lb)
+        ver = (lb, mod.__version__)
+    except ModuleNotFoundError:
+        ver = (lb, 'None')
+
+    print('%-12s%+8s' % ver)
+
+print()
+
