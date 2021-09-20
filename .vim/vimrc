@@ -19,6 +19,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'sheerun/vim-polyglot'
+"" Install https://github.com/mg979/vim-visual-multi
 Plugin 'motus/pig.vim'
 " End init Vundle plugins
 

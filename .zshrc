@@ -129,6 +129,7 @@ alias cdp="cd ~/Projects"
 alias isup="pgrep -lf"
 alias g="git"
 alias gr="grep -irn"
+alias open="xdg-open"
 
 function rline() {
     # rline myfile 52
@@ -137,10 +138,10 @@ function rline() {
 
 alias p="python"
 alias pipup="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
-alias ip="ipython"
+alias ipy="ipython"
 
 function venv() {
-    envname=${1:-.env}
+    envname=${1:-.venv}
     echo Activating $envname
     source ./$envname/bin/activate
 }
@@ -163,6 +164,14 @@ function add-mono-chan() {
 }
 alias del-mono-chan="pacmd unload-module module-remap-sink"
 
-# Deezer aliases
+alias pipip="pip install --upgrade pip ipython jedi==0.17.2 parso==0.7.1"
+
+# WORK
+source $HOME/.dzr_env
 source $HOME/.aliases_dzr
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/google-cloud-sdk/completion.zsh.inc'; fi

@@ -8,3 +8,5 @@ base16-shell
 bash-git-prompt
 .tmux/
 *.pyc
+.vscode
+
