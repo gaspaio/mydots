@@ -8,12 +8,14 @@
 [core]
     editor = vim
     ignorecase = false
+	excludesFile = /assets/global.gitignore
 
 [alias]
     st = status --short --branch
     ci = commit
     cm = commit -m
     br = branch
+    bra = branch -a
     a = add -A
     co = checkout
     df = diff
@@ -34,8 +36,8 @@
     # Reset current branch to master
     rem = "!f() { git reset $(git merge-base master $(git rev-parse --abbrev-ref HEAD)); }; f"
 
-[core]
-    excludesfile = ~/.gitignore_global
+#[core]
+#    excludesfile = ~/.gitignore_global
 
 [diff]
     noprefix = true

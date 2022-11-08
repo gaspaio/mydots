@@ -1,5 +1,9 @@
 .idea
 .DS_Store
+
+# Python
+.mypy_cache
+.pytest_cache
+.venv
 venv
 
-.ycm_extra_conf.py
